@@ -4,7 +4,7 @@
  */
 export const part1 = async d => {
 	const data = d.split('\n');
-	return null;
+	return data;
 };
 
 /**
@@ -12,5 +12,5 @@ export const part1 = async d => {
  */
 export const part2 = async d => {
 	const data = d.split('\n');
-	return null;
+	return data;
 };

@@ -1,7 +1,7 @@
 // AOC Runner
 // Author: Scoder12
 
-import { performance } from 'perf_hooks'
+import { performance } from 'perf_hooks';
 import * as fs from 'fs/promises';
 import * as readline from 'readline';
 
