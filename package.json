@@ -1,0 +1,25 @@
+{
+  "name": "advent_code_2021",
+  "version": "0.1.0",
+  "description": "Just a repo for holding my work for Advent of Code 2021",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "lint": "eslint *.js",
+    "lintfix": "eslint *.js --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miquelfire/aoc2021.git"
+  },
+  "author": "Miquel Burns <miquelfire@gmail.com> (https://miquelfire.red)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/miquelfire/aoc2021/issues"
+  },
+  "homepage": "https://github.com/miquelfire/aoc2021#readme",
+  "devDependencies": {
+    "eslint": "^7.26.0"
+  }
+}
