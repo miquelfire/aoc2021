@@ -126,7 +126,16 @@ export const part2 = async d => {
 			}
 		}
 		else {
-			// Need calculate the line somehow
+			// 45d line
+			const dx = (x1 == x2) ? 0 : ((x1 > x2) ? -1 : 1);
+			const dy = (y1 == y2) ? 0 : ((y1 > y2) ? -1 : 1);
+			let x = x1;
+			let y = y1;
+			while (x != (x2 + dx) && y != (y2 + dy)) {
+				grid[x][y]++;
+				x += dx;
+				y += dy;
+			}
 		}
 	});
 	return grid.reduce((p, v) => p + v.reduce((p, v) => {
@@ -135,4 +144,5 @@ export const part2 = async d => {
 		}
 		return p;
 	}, 0), 0);
+	// 18418 too low
 };
