@@ -101,7 +101,7 @@ export const part2 = async d => {
 			// Remove right
 			right.split('').forEach(e => {
 				seqs = seqs.replace(e, '');
-			})
+			});
 			if (seqs.length == 1) {
 				// Found the bottom segment
 				bottom = seqs;
