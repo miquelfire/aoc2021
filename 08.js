@@ -47,16 +47,20 @@ export const part2 = async d => {
 		line[0] = line[0].map(e => e.split('').sort().join(''));
 
 		// Find the right segments as we know 1 uses both (At this point, don't know which is which yet)
+		// Will also get the top segment
 		const right = line[0][0];
+		let top = line[0][1];
 		mapping.c = right;
 		mapping.f = right;
-		mapping.b = mapping.a.replace(right, '');
-		mapping.d = mapping.d.replace(right, '');
-		mapping.e = mapping.e.replace(right, '');
-		mapping.g = mapping.g.replace(right, '');
+		right.split('').forEach(e => {
+			mapping.b = mapping.b.replace(e, '');
+			mapping.d = mapping.d.replace(e, '');
+			mapping.e = mapping.e.replace(e, '');
+			mapping.g = mapping.g.replace(e, '');
+			top = top.replace(e, '');
+		});
 
 		// Find the top segment
-		const top = line[0][1].replace(right, '');
 		mapping.a = top;
 		mapping.b = mapping.b.replace(top, '');
 		mapping.c = mapping.c.replace(top, '');
@@ -68,7 +72,7 @@ export const part2 = async d => {
 		// Find the middle segment
 		let middle = false;
 		let middleIndex = false;
-		const fourSegs = line[0][2].replace(right, '').split('');
+		const fourSegs = line[0][2].split('').filter(e => right.indexOf(e) == -1);
 		fourSegs.forEach((e, fi) => {
 			for (let i = 6; i < 9; i++)
 				if (line[0][i].indexOf(e) == -1) {
@@ -122,9 +126,6 @@ export const part2 = async d => {
 		}, {});
 		
 		const translated = line[1].map(e => lookupMap[e.replace(/./g, (m => reverseMapping[m])).split('').sort().join('')]).join('');
-		console.log(mapping);
-		console.log(line[1].map(e => e.replace(/./g, (m => reverseMapping[m])).split('').sort().join('')));
-		console.log(translated);
 		sum += parseInt(translated, 10);
 	});
 	return sum;
