@@ -34,7 +34,7 @@ function parseChunk(chunk) {
 		}
 	}
 
-	return [true, stack];
+	return [true, stack.map(e => pairs[e]).reverse()];
 }
 
 /**
@@ -57,6 +57,14 @@ export const part1 = async d => {
  * @param {string} d 
  */
 export const part2 = async d => {
-	const data = d.split('\n');
-	return data;
+	const scores = {
+		')': 1,
+		']': 2,
+		'}': 3,
+		'>': 4,
+	};
+	const data = d.split('\n').map(e => parseChunk(e)).filter(e => e[0]).map(e => e[1])
+		.map(e => e.reduce((p, v) => p * 5 + scores[v], 0));
+	data.sort((a, b) => a - b);
+	return data[Math.floor(data.length / 2)];
 };
