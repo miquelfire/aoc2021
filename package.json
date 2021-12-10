@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/miquelfire/aoc2021#readme",
   "devDependencies": {
-    "eslint": "^7.26.0"
+    "eslint": "^8.4.1"
   }
 }
