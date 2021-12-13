@@ -8,7 +8,7 @@
  */
 function foldBoard(board, dir, pos) {
 	switch (dir) {
-		case 'y':
+		case 'y': {
 			// Easy with the fact we're just merging rows
 			const bottom = board.slice(pos);
 			board.splice(pos);
@@ -19,6 +19,7 @@ function foldBoard(board, dir, pos) {
 				row.forEach((v, x) => board[pos][x] |= v);
 			}
 			break;
+		}
 		case 'x':
 			// Hard because merging columns is not really builtin like rows
 			for (let y = 0; y < board.length; y++) {
@@ -84,5 +85,10 @@ export const part2 = async d => {
 	}
 	dots.forEach(e => board[e[1]][e[0]] = 1);
 	const foldRegEx = /([xy])=(\d+)/;
-	return data;
+	data[1].forEach(e => {
+		const foldStep = foldRegEx.exec(e);
+		foldBoard(board, foldStep[1], foldStep[2]);
+	});
+
+	return '\n' + board.map(e => e.map(e => e ? '#' : ' ').join('')).join('\n');
 };
