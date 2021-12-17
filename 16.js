@@ -1,15 +1,9 @@
 'use strict';
 
 /**
- * @param {string} b 
+ * @param {string} h 
  * @returns {string}
  */
-function bin2hex(b) {
-	return b.match(/.{4}/g).reduce(function(acc, i) {
-		return acc + parseInt(i, 2).toString(16);
-	}, '');
-}
-
 function hex2bin(h) {
 	return h.split('').reduce(function(acc, i) {
 		return acc + ('000' + parseInt(i, 16).toString(2)).slice(-4);
@@ -17,23 +11,8 @@ function hex2bin(h) {
 }
 
 /**
- * Reads a stream of input and processes it
  * @param {string} input 
- */
-function readStream(input) {
-	const packets = [];
-	while (input.length > 0) {
-		let packet;
-		({packet, remaining: input} = readBitsChunk(input));
-		packets.push(packet);
-	}
-
-	return packets;
-}
-
-/**
- * @param {string} input 
- * @returns {{packet: {version: number, type: number, value: number|string|packet[]}, remaining: string}}
+ * @returns {{version: number, type: number, value: number|packet[]}, remaining: string}}
  */
 function readBitsChunk(input) {
 	const binaryBuffer = hex2bin(input).split('');
@@ -106,6 +85,40 @@ function readBitsChunk(input) {
 }
 
 /**
+ * @param {{version: number, type: number, value: number|packet[]}} packet 
+ */
+function processPacket(packet) {
+	switch (packet.type) {
+		case 4: {
+			return packet.value;
+		}
+		case 0: {
+			return packet.value.reduce((p, v) => processPacket(v) + p, 0);
+		}
+		case 1: {
+			return packet.value.reduce((p, v) => processPacket(v) * p, 1);
+		}
+		case 2: {
+			return Math.min(...packet.value.map(processPacket));
+		}
+		case 3: {
+			return Math.max(...packet.value.map(processPacket));
+		}
+		case 5: {
+			return (processPacket(packet.value[0]) > processPacket(packet.value[1])) ? 1 : 0;
+		}
+		case 6: {
+			return (processPacket(packet.value[0]) < processPacket(packet.value[1])) ? 1 : 0;
+		}
+		case 7: {
+			return (processPacket(packet.value[0]) == processPacket(packet.value[1])) ? 1 : 0;
+		}
+	}
+	console.log(packet);
+	return false;
+}
+
+/**
  * @param {string} d 
  */
 export const part1 = async d => {
@@ -132,6 +145,5 @@ export const part1 = async d => {
  * @param {string} d 
  */
 export const part2 = async d => {
-	const data = d;
-	return data;
+	return processPacket(readBitsChunk(d).packet);
 };
