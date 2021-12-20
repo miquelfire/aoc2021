@@ -63,6 +63,23 @@ export const part1 = async d => {
  * @param {string} d 
  */
 export const part2 = async d => {
-	const data = d.split('\n');
-	return data;
+	const [enhancement] = d.split('\n\n', 1).map(e => e.split('').map(e => (e === '#') ? 1 : 0));
+	const [,imageData] = d.split('\n\n').map(e => e.split('\n').map(e => e.split('').map(e => (e === '#') ? 1 : 0)));
+	const image = new Array(imageData.length * 10);
+
+	for (let y = 0; y < image.length; y++) {
+		image[y] = new Array(imageData[0].length * 10).fill(0);
+	}
+
+	const startY = Math.floor(image.length / 2 - imageData.length / 2);
+	const startX = Math.floor(image[0].length / 2 - imageData[0].length / 2);
+	for (let y = 0; y < imageData.length; y++) {
+		for (let x = 0; x < imageData[0].length; x++) {
+			image[startY + y][startX + x] = imageData[y][x];
+		}
+	}
+	for (let i = 0; i < 50; i++) {
+		enhanceImage(enhancement, image);
+	}
+	return image.reduce((p, v) => p + v.reduce((p, v) => p + v, 0), 0);
 };
