@@ -21,5 +21,8 @@
   "homepage": "https://github.com/miquelfire/aoc2021#readme",
   "devDependencies": {
     "eslint": "^8.4.1"
+  },
+  "dependencies": {
+    "@ungap/structured-clone": "^0.3.4"
   }
 }
