@@ -21,6 +21,6 @@ import { run } from './runner.js';
 // the argument for maxDay is optional, remove it for no limit
 // runner.getDay(5).then((day) => runner.run(day))
 
-run(24);
+run(25);
 
 ('');
